@@ -4,11 +4,20 @@
     <meta charset="utf-8">
     <meta name="viewport" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
     <title>Vue.js 搜索页面</title>
-    <script th:src="@{/webjars/vue/2.6.11/vue.min.js}"></script>
-    <script th:src="@{/webjars/axios/0.19.2/dist/axios.min.js}"></script>
+    <script th:src="@{/js/vue/2.6.11/vue.js}"></script>
+    <script th:src="@{/js/axios/0.19.2/axios.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/website.css}"/>
 </head>
+<script type="text/javascript" >
+    function f() {
+        var username = axios.get("/getUser")
+        alert(username)
+    }
+
+</script>
 <body>
+
+<button onclick="f()">11111</button>
 <form id="main" v-cloak>
     <div class="bar">
         <!-- searchString 模型与文本域创建绑定 -->

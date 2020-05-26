@@ -1,10 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <meta charset="utf-8">
+    <meta name="viewport" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
+    <title>Vue.js 搜索页面</title>
+    <script th:src="@{/js/vue/2.6.11/vue.js}"></script>
+    <script th:src="@{/js/axios/0.19.2/axios.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/website.css}"/>
 </head>
+
 <body>
-$END$
+
+<form id="main" v-cloak>
+
+    <ul>
+
+        <p >{{product.pid}}{{product.pname}} {{product.pprice}} </p>>
+
+
+    </ul>
+</form>
+<script type="text/javascript">
+    var demo = new Vue({
+        el: '#main',
+        data: {
+            product:""
+        },
+        computed: {
+
+
+        },
+        mounted: function() {
+            this.fetchData();
+        },
+        methods: {
+            fetchData: function() {
+                var that = this;
+
+                axios.get("/getProduct")
+                    .then(function(response){
+                        that.product = response.data;
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+
+            }
+
+
+        }
+    });
+</script>
 </body>
 </html>

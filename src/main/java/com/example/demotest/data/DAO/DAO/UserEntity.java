@@ -1,4 +1,4 @@
-package com.example.demotest.data.DAO.LoginDAO;
+package com.example.demotest.data.DAO.DAO;
 
 import lombok.Data;
 
@@ -18,6 +18,7 @@ public class UserEntity {
         @Column
         private String password;
 
-
+        @Column
+        private String headurl;
 
 }

@@ -19,13 +19,13 @@ public class WebController {
     public String getWebJarSites() {
         log.info("Web Jar page loading...");
 
-        return "webjarpage/site-search";
+        return "webjarpage/site-search.html";
 	}
 	
 	@GetMapping("/dynamic/web")
 	public String getDynamicSites() {
 		log.info("dynamic page loading...");
-		return "dynamic/site-search";
+		return "dynamic/site-search.html";
 	}
 	
 	@RequestMapping(value="/dynamic/sites", method=RequestMethod.GET)

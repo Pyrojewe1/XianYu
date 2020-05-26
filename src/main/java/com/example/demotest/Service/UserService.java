@@ -1,35 +1,60 @@
 package com.example.demotest.Service;
 
 
-import com.example.demotest.data.Bean.ActiveUser;
-import com.example.demotest.data.DAO.LoginDAO.LoginRepository;
-import com.example.demotest.data.DAO.LoginDAO.UserRepository;
+import com.example.demotest.data.Bean.LoginUser;
+import com.example.demotest.data.Bean.User;
+import com.example.demotest.data.DAO.DAO.UserEntity;
+import com.example.demotest.data.DAO.DAO.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Service
 public class UserService {
 @Autowired
-private UserRepository loginRepository;
-    public boolean isLogin(String username ,String password){
+private UserRepository userRepository;
+    public boolean isNormal(String username , String password, HttpSession httpSession){
 
-       System.out.println(loginRepository.isLogin(username,password));
-        System.out.println(this.loginRepository.isLogin(username,password));
+        List<UserEntity> userEntityList = userRepository.isNormal(username,password);
 
-        System.out.println(loginRepository.isLogin("wangyan","wangyan123"));
-        if(loginRepository.isLogin(username,password).size()>0){
+        if(userEntityList.size()>0){
+            UserEntity userEntity = userEntityList.get(0);
+            LoginUser loginUser = new LoginUser(userEntity.getId(),userEntity.getUsername(),userEntity.getHeadurl());
+            httpSession.setAttribute("loginUser",loginUser);
+            return true;
+        }
+        else return false;
+    }
+    public boolean isAdmin(String username , String password, HttpSession httpSession){
+
+        List<UserEntity> userEntityList = userRepository.isAdmin(username,password);
+
+        if(userEntityList.size()>0){
+            UserEntity userEntity = userEntityList.get(0);
+            LoginUser loginUser = new LoginUser(userEntity.getId(),userEntity.getUsername(),userEntity.getHeadurl());
+            httpSession.setAttribute("loginUser",loginUser);
             return true;
         }
         else return false;
     }
 
-    public boolean addUser(String username ,String password){
-        if(loginRepository.addUser(username,password)>0){
+
+    public boolean addUser(String username ,String password,String headurl){
+        if(headurl.equals("")){
+            headurl="localhost:8080/upload/timg.jpg";
+        }
+        if(userRepository.addUser(username,password,headurl)>0){
             return true;
         }
         else return false;
 
+    }
+
+    public boolean check(String username){
+        if(userRepository.check(username).size()>0)
+            return true;
+        else return false;
     }
 
 }

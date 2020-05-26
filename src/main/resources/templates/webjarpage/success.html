@@ -1,10 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <meta charset="utf-8">
+    <meta name="viewport" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
+    <title>Vue.js 搜索页面</title>
+    <script th:src="@{/js/vue/2.6.11/vue.js}"></script>
+    <script th:src="@{/js/axios/0.19.2/axios.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/website.css}"/>
 </head>
+
 <body>
-$END$
+
+<form id="main" v-cloak>
+  <p>{{username}}</p>
+
+    <ul>
+        <!-- 循环输出数据 -->
+        <li v-for="product in products">
+            <p >{{product.pname}} {{product.pprice}}</p>
+            <button onclick="function f() {
+              alert('点击');
+            }">点我 </button>
+            <button>点我1 </button>
+            <button>点我2 </button>
+        </li>
+        <button onclick="function f() {
+              alert('点击');
+            }">点我3 </button>
+    </ul>
+</form>
+<script type="text/javascript">
+    var demo = new Vue({
+        el: '#main',
+        data: {
+            username:"",
+            products:[]
+        },
+        computed: {
+
+
+        },
+        mounted: function() {
+            this.fetchData();
+        },
+        methods: {
+            fetchData: function() {
+                var that = this;
+
+                axios.get("/getUser")
+                    .then(function(response){
+                        that.username = response.data;
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+                axios.get("/getAllProduct")
+                    .then(function(response){
+                        that.products = response.data;
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+            },
+            
+
+
+        }
+    });
+</script>
 </body>
 </html>

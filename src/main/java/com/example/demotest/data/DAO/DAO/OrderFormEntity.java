@@ -1,4 +1,4 @@
-package com.example.demotest.data.DAO.UserDAO;
+package com.example.demotest.data.DAO.DAO;
 
 import lombok.Data;
 
@@ -14,7 +14,8 @@ public class OrderFormEntity {
         审核,
         交易中;
     }
-    @Column
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private  Long oid;
     @Column
     private  Long ototalprice;
@@ -24,4 +25,27 @@ public class OrderFormEntity {
     @Enumerated(EnumType.STRING)
     @Column
     private Ostatus ostatus;
+
+    @Column
+    private String  ostarttime;
+
+    @Column
+    private String  oendtime;
+
+
+    @Column
+    private String  oaddressee;
+
+
+    @Column
+    private String  oaddress;
+
+    @Column
+    private Long oproductid;
+
+
+
+
+
+
 }

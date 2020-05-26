@@ -8,7 +8,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface LoginRepository extends JpaRepository<LoginEntity,Long> {
-    @Modifying
-    @Query(value = "select * from login where username=?1 and password=?2 ", nativeQuery = true)
-    List<LoginEntity> findByUserNameAndPassowrd(@Param("username") String username, @Param("password") String password);
+    List<LoginEntity> findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+
 }
+
+

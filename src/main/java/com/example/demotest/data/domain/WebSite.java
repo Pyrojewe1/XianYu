@@ -1,4 +1,4 @@
-package com.example.demotest.domain;
+package com.example.demotest.data.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

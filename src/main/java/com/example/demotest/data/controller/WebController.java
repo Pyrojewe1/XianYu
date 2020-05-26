@@ -1,16 +1,20 @@
 package com.example.demotest.data.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.example.demotest.data.DAO.UserDAO.ProductEntiy;
 import com.example.demotest.data.domain.WebSite;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -19,13 +23,19 @@ public class WebController {
     public String getWebJarSites() {
         log.info("Web Jar page loading...");
 
-        return "webjarpage/site-search";
+        return "webjarpage/site-search.html";
 	}
-	
+
+	@GetMapping("/login")
+	public String get(){
+		log.info("Web Jar page loading...");
+
+		return "webjarpage/login.html";
+	}
 	@GetMapping("/dynamic/web")
 	public String getDynamicSites() {
 		log.info("dynamic page loading...");
-		return "dynamic/site-search";
+		return "dynamic/site-search.html";
 	}
 	
 	@RequestMapping(value="/dynamic/sites", method=RequestMethod.GET)
@@ -41,4 +51,40 @@ public class WebController {
 		
 		return websites;
 	}
+
+	@GetMapping("/resist")
+	public String getResist() {
+		return "webjarpage/resist.html";
+	}
+
+
+
+	@RequestMapping(value="/getUser", method=RequestMethod.GET)
+	@ResponseBody
+	public String getUsername() {
+		String username;
+
+		username=(String) ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("ActiveUser");
+
+		return username;
+	}
+
+	@RequestMapping(value="/getProduct", method=RequestMethod.GET)
+	@ResponseBody
+	public ProductEntiy getProduct() {
+
+
+		ProductEntiy product =(ProductEntiy) ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("product");
+
+		return product;
+	}
+
+	@GetMapping("/test")
+	public String test() {
+		return "webjarpage/test.html";
+	}
+
+
+
+
 }
